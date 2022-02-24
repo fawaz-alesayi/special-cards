@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:invitation_cards/utils.dart';
 
 class BodyText extends StatelessWidget {
   final String text;
   final List<String> userInputs;
 
-  BodyText({required this.text, required this.userInputs});
+  const BodyText({
+    Key? key,
+    required this.text,
+    required this.userInputs,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
