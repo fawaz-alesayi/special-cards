@@ -94,19 +94,16 @@ class HomePage extends StatelessWidget {
             ),
             const SizedBox(height: 32),
             TemplateWidget(
-                template: Template(
-                    body: "I would be happy to see you at Time and Place",
-                    userInputs: ['Name'])),
+                body: "I would be happy to see you at Time and Place so yeah",
+                userInputs: ['Time', 'Place']),
             const SizedBox(height: 32),
             TemplateWidget(
-                template: Template(
-                    body: "I would be happy to see you at Time and Place",
-                    userInputs: ['Name'])),
+                body: "I would be happy to see you at Time and Place",
+                userInputs: ['Name']),
             const SizedBox(height: 32),
             TemplateWidget(
-                template: Template(
-                    body: "I would be happy to see you at Time and Place",
-                    userInputs: ['Name'])),
+                body: "I would be happy to see you at Time and Place",
+                userInputs: ['Name'])
           ],
         ),
       ),

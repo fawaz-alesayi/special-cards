@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invitation_cards/body_text.dart';
 import 'package:invitation_cards/drop_down_button.dart';
+import 'package:invitation_cards/body_text.dart';
 
 class Template {
   String title;
@@ -14,21 +16,24 @@ class Template {
 }
 
 class TemplateWidget extends StatefulWidget {
-  final Template template;
-
-  TemplateWidget({required this.template});
+  final String title;
+  final String body;
+  final List<String> userInputs;
+    
+  TemplateWidget({this.title = "Invitation", required this.body, required this.userInputs});
 
   @override
   _TemplateWidgetState createState() => _TemplateWidgetState();
 }
 
 class _TemplateWidgetState extends State<TemplateWidget> {
-  late List<String> userInputs;
+  late Template template;
 
   @override
   void initState() {
     super.initState();
-    userInputs = List.from(widget.template.userInputs);
+    template = Template(
+        body: widget.body, userInputs: widget.userInputs, title: widget.title);
   }
 
   @override
@@ -109,10 +114,9 @@ class _TemplateWidgetState extends State<TemplateWidget> {
         direction: Axis.vertical,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(widget.template.title,
+          Text(widget.title,
               style: Theme.of(context).textTheme.headline3),
           Row(
-            
             children: [
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -133,7 +137,7 @@ class _TemplateWidgetState extends State<TemplateWidget> {
                   ),
                   onChanged: (value) {
                     setState(() {
-                      userInputs[0] = value;
+                      widget.userInputs[0] = value;
                     });
                   },
                 ),
@@ -142,8 +146,7 @@ class _TemplateWidgetState extends State<TemplateWidget> {
           ),
           Wrap(
             children: [
-              Text(widget.template.body,
-                  style: Theme.of(context).textTheme.bodyText1)
+              BodyText(text: widget.body, userInputs: widget.userInputs),
             ],
           ),
         ],
