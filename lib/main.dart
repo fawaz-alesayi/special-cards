@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invitation_cards/template.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,13 +11,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Special Cards',
       theme: ThemeData(
+        hintColor: Colors.white,
+        inputDecorationTheme: const InputDecorationTheme(
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.yellowAccent),
+          ),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+        ),
         textTheme: const TextTheme(
           headline1: TextStyle(
               fontFamily: 'Oregano', color: Colors.white, fontSize: 48),
           headline2:
               TextStyle(fontFamily: 'Kanit', color: Colors.white, fontSize: 28),
+          headline3: TextStyle(
+              fontFamily: 'Oregano',
+              color: Colors.white,
+              fontStyle: FontStyle.italic),
+          bodyText1:
+              TextStyle(fontFamily: 'Kanit', color: Colors.white, fontSize: 18),
         ),
         primarySwatch: const MaterialColor(0xFF390099, {
           50: Color(0xFFE7E0F3),
@@ -50,7 +69,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: Container(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         child: ListView(
           children: [
             Padding(
@@ -74,11 +93,20 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            Placeholder(fallbackHeight: 200, color: Colors.white),
+            TemplateWidget(
+                template: Template(
+                    body: "I would be happy to see you at Time and Place",
+                    userInputs: ['Name'])),
             const SizedBox(height: 32),
-            Placeholder(fallbackHeight: 200, color: Colors.white),
+            TemplateWidget(
+                template: Template(
+                    body: "I would be happy to see you at Time and Place",
+                    userInputs: ['Name'])),
             const SizedBox(height: 32),
-            Placeholder(fallbackHeight: 200, color: Colors.white)
+            TemplateWidget(
+                template: Template(
+                    body: "I would be happy to see you at Time and Place",
+                    userInputs: ['Name'])),
           ],
         ),
       ),
