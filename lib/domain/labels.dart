@@ -1,7 +1,7 @@
 abstract class Label {
-  String key;
-  
-  Label({
+  final String key;
+
+  const Label({
     required this.key,
   });
 
@@ -11,6 +11,7 @@ abstract class Label {
 
 class DateLabel extends Label {
   DateTime value;
+
   DateLabel({
     required this.value,
     required String key,
@@ -24,6 +25,7 @@ class DateLabel extends Label {
 
 class TextLabel extends Label {
   String value;
+
   TextLabel({
     required this.value,
     required String key,
@@ -33,4 +35,17 @@ class TextLabel extends Label {
   String getText() {
     return value;
   }
+}
+
+class MultiChoiceLabel<T> extends Label {
+  T value;
+  List<T> choices;
+
+  MultiChoiceLabel({required this.value, required this.choices, required String key}) : super(key: key);
+  
+  @override
+  String getText() {
+    return T.toString();
+  }
+
 }

@@ -3,17 +3,16 @@ import 'package:collection/collection.dart';
 
 /// The message template
 ///
-/// [labels] refer to the interactable elements of the body text
+/// [labels] refer to the interactable elements of the template
 class Template {
-  String title;
-
+  final String title;
   /// The raw body text of the template
   /// 
   /// Example:
   /// Hello, my name is {name} and I am {age} years old.
   final String _body;
 
-  List<Label> labels;
+  final List<Label> labels;
 
   Template({
     required this.title,
@@ -33,6 +32,8 @@ class Template {
       }
     });
   }
+
+  String get rawBody => _body;
 }
 
 abstract class TemplateView {}

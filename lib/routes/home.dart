@@ -33,8 +33,12 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-          const GeneralTemplate(
-            tappable: true,
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 32.0),
+            child: GeneralTemplateCard(
+              template: defaultGeneralTemplate,
+              tappable: true,
+            ),
           ),
         ],
       ),

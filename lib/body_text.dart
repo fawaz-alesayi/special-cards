@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:invitation_cards/utils.dart';
 
 import 'domain/labels.dart';
+import 'multi_choice_label_view.dart';
 
 class BodyText extends StatelessWidget {
   final String text;
@@ -17,14 +18,15 @@ class BodyText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> textTokens = text.split(" ").intersperse(" ");
-    List<String> formattedLabelValues =
+    List<String> formattedLabelKeys =
         labels.map((label) => addFormat(label.key)).toList();
     return RichText(
       text: TextSpan(
         style: Theme.of(context).textTheme.bodyText1,
         children: textTokens.map((token) {
-          if (formattedLabelValues.contains(token)) {
-            Label l = labels.firstWhere((label) => label.key == removeFormat(token));
+          if (formattedLabelKeys.contains(token)) {
+            Label l =
+                labels.firstWhere((label) => label.key == removeFormat(token));
             return WidgetSpan(
               alignment: PlaceholderAlignment.middle,
               child: labelView(l),
@@ -43,18 +45,20 @@ class BodyText extends StatelessWidget {
 }
 
 Widget labelView(Label label) {
-  switch (label.runtimeType) {
-    case TextLabel:
-      return TextLabelView(label: label);
-    case DateLabel:
-      return DateLabelView(label: label);
-    default:
-      return TextLabelView(label: label);
+  if (label is TextLabel) {
+    return TextLabelView(label: label);
   }
+  if (label is DateLabel) {
+    return DateLabelView(label: label);
+  }
+  if (label is MultiChoiceLabel) {
+    return MultiChoiceLabelView(label: label);
+  }
+  return DefaultLabelView(label: label);
 }
 
 class TextLabelView extends StatefulWidget {
-  final Label label;
+  final TextLabel label;
 
   const TextLabelView({
     Key? key,
@@ -72,11 +76,15 @@ class _TextLabelViewState extends State<TextLabelView> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Container(
           width: 100.0,
-          child: TextField(
+          child: TextFormField(
             decoration: const InputDecoration(
-              hintText: ""
+              hintText: "Enter text",
             ),
-            onChanged: (value) => {}
+            onChanged: (value) => {
+              setState(() {
+                widget.label.value = value;
+              })
+            },
           ),
         ));
   }
@@ -105,7 +113,6 @@ class _DateLabelViewState extends State<DateLabelView> {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: TextButton(
         onPressed: () {
-          debugPrint("Hello");
           _selectDate(context);
         },
         child: Text(selectedDate.dateString),
@@ -125,5 +132,16 @@ class _DateLabelViewState extends State<DateLabelView> {
         selectedDate = selected;
       });
     }
+  }
+}
+
+class DefaultLabelView extends StatelessWidget {
+  final Label label;
+
+  const DefaultLabelView({Key? key, required this.label}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(label.getText());
   }
 }
