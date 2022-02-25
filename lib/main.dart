@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:invitation_cards/template.dart';
 
+import 'domain/labels.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -50,18 +52,16 @@ class MyApp extends StatelessWidget {
           900: Color(0xFF17006B),
         }),
       ),
-      home: const HomePage(title: 'Flutter Demo Home Page'),
+      home: const HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  final String title;
 
   const HomePage({
     Key? key,
-    required this.title,
   }) : super(key: key);
 
   @override
@@ -93,17 +93,10 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            TemplateWidget(
-                body: "I would be happy to see you at Time and Place so yeah",
-                userInputs: ['Time', 'Place']),
+            TemplateCard(
+                body: "I would be happy to see you at {Time} and {Place}",
+                labels: [TextLabel(value: 'Time'), TextLabel(value: 'Place')]),
             const SizedBox(height: 32),
-            TemplateWidget(
-                body: "I would be happy to see you at Time and Place",
-                userInputs: ['Name']),
-            const SizedBox(height: 32),
-            TemplateWidget(
-                body: "I would be happy to see you at Time and Place",
-                userInputs: ['Name'])
           ],
         ),
       ),

@@ -11,9 +11,9 @@ extension ListExtension<T> on List<T> {
   /// [separator] is the element to add between each element
   List<T> intersperse(T separator) {
     List<T> result = [];
-    for (int i = 0; i < this.length; i++) {
+    for (int i = 0; i < length; i++) {
       result.add(this[i]);
-      if (i != this.length - 1) {
+      if (i != length - 1) {
         result.add(separator);
       }
     }

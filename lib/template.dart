@@ -1,39 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invitation_cards/body_text.dart';
+import 'package:invitation_cards/domain/template.dart';
 import 'package:invitation_cards/drop_down_button.dart';
-import 'package:invitation_cards/body_text.dart';
 
-class Template {
-  String title;
-  String body;
-  List<String> userInputs;
+import 'domain/labels.dart';
 
-  Template(
-      {required this.body,
-      required this.userInputs,
-      this.title = "Invitation"});
-}
-
-class TemplateWidget extends StatefulWidget {
+class TemplateCard extends StatefulWidget {
   final String title;
   final String body;
-  final List<String> userInputs;
-    
-  TemplateWidget({this.title = "Invitation", required this.body, required this.userInputs});
+  final List<Label> labels;
+
+  TemplateCard(
+      {this.title = "Invitation", required this.body, required this.labels});
 
   @override
-  _TemplateWidgetState createState() => _TemplateWidgetState();
+  _TemplateCardState createState() => _TemplateCardState();
 }
 
-class _TemplateWidgetState extends State<TemplateWidget> {
+class _TemplateCardState extends State<TemplateCard> {
   late Template template;
 
   @override
   void initState() {
     super.initState();
-    template = Template(
-        body: widget.body, userInputs: widget.userInputs, title: widget.title);
+    template = Template(body: widget.body, labels: {}, title: widget.title);
   }
 
   @override
@@ -114,43 +105,52 @@ class _TemplateWidgetState extends State<TemplateWidget> {
         direction: Axis.vertical,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(widget.title,
-              style: Theme.of(context).textTheme.headline3),
-          Row(
-            children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: SizedBox(child: GreetingsChooser(), width: 102),
-              ),
-              SizedBox(
-                width: 100,
-                child: TextField(
-                  style: TextStyle(color: Colors.white),
-                  decoration: const InputDecoration(
-                    hintText: "Name",
-                    contentPadding: EdgeInsets.all(0.0),
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      widget.userInputs[0] = value;
-                    });
-                  },
-                ),
-              ),
-            ],
-          ),
-          Wrap(
-            children: [
-              BodyText(text: widget.body, userInputs: widget.userInputs),
-            ],
-          ),
+          Text(widget.title, style: Theme.of(context).textTheme.headline3),
+          Row(children: const [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: SizedBox(child: GreetingsChooser(), width: 102),
+            ),
+            SizedBox(
+              width: 100,
+              child: CardTextField(),
+            ),
+          ]),
+          Wrap(children: [BodyText(text: widget.body, labels: widget.labels)]),
         ],
       ),
     );
+  }
+}
+
+class CardTextField extends StatelessWidget {
+  const CardTextField({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const TextField(
+      style: TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+          hintText: "Name",
+          contentPadding: EdgeInsets.all(0.0),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.white,
+            ),
+          )),
+    );
+  }
+}
+
+Widget labelView(Label label) {
+  switch (label.runtimeType) {
+    case TextLabel:
+      return TextButton(onPressed: () {}, child: Text(label.getText()));
+    case DateLabel:
+      return TextField();
+    default:
+      return TextButton(onPressed: () {}, child: Text(label.toString()));
   }
 }
