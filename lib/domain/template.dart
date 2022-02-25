@@ -1,8 +1,5 @@
 import 'package:invitation_cards/domain/labels.dart';
-
-
-typedef LabelName = String;
-
+import 'package:collection/collection.dart';
 
 /// The message template
 ///
@@ -16,7 +13,7 @@ class Template {
   /// Hello, my name is {name} and I am {age} years old.
   final String _body;
 
-  Map<LabelName, Label> labels;
+  List<Label> labels;
 
   Template({
     required this.title,
@@ -28,8 +25,9 @@ class Template {
   /// Labels are enclosed in curly braces {}
   String get body {
     return _body.replaceAllMapped(RegExp(r'{([^}]+)}'), (Match m) {
-      if (labels.containsKey(m.group(1))) {
-        return labels[m.group(1)]!.getText();
+      final Label? label = labels.firstWhereOrNull((label) => label.key == m.group(1));
+      if (label != null) {
+        return label.getText();
       } else {
         return m.group(0)!;
       }

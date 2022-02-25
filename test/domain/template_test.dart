@@ -9,7 +9,7 @@ void main() {
     Template t = Template(
         title: "Hi",
         body: "Hello {name}, how are you?",
-        labels: {"name": TextLabel(value: "John")});
+        labels: [TextLabel(key: "name", value: "John")]);
 
     expect(t.body, "Hello John, how are you?");
   });
@@ -20,7 +20,7 @@ void main() {
     Template t = Template(
         title: "Hi",
         body: "Hello {age}, how are you?",
-        labels: {"name": TextLabel(value: "John")});
+        labels: [TextLabel(key: "name", value: "John")]);
 
     expect(t.body, "Hello {age}, how are you?");
   });

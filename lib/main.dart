@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:invitation_cards/template.dart';
-
-import 'domain/labels.dart';
+import 'package:invitation_cards/routes/home.dart';
+import 'package:invitation_cards/routes/template.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +24,11 @@ class MyApp extends StatelessWidget {
           ),
           border: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.white,
           ),
         ),
         textTheme: const TextTheme(
@@ -52,54 +56,12 @@ class MyApp extends StatelessWidget {
           900: Color(0xFF17006B),
         }),
       ),
-      home: const HomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomePage(),
+        '/template': (context) => const TemplatePage(),
+      },
       debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-
-  const HomePage({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Center(
-                child: Text(
-                  'Special Invitations!',
-                  style: Theme.of(context).textTheme.headline1,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Center(
-                child: Text(
-                  'Choose your template',
-                  style: Theme.of(context).textTheme.headline2,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            const SizedBox(height: 32),
-            TemplateCard(
-                body: "I would be happy to see you at {Time} and {Place}",
-                labels: [TextLabel(value: 'Time'), TextLabel(value: 'Place')]),
-            const SizedBox(height: 32),
-          ],
-        ),
-      ),
     );
   }
 }

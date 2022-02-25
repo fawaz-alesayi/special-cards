@@ -20,3 +20,10 @@ extension ListExtension<T> on List<T> {
     return result;
   }
 }
+
+extension DateExtension<T> on DateTime {
+  /// returns the date in the format of yyyy-MM-dd
+  String get dateString {
+    return "${year.toString().padLeft(4, '0')}-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}";
+  }
+}
